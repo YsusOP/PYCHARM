@@ -8,7 +8,7 @@ albumes_cancion = db.Table('album_cancion',\
                           db.Column('album_id',db.ForeignKey('album.id'),primari_key=True),\
                           db.Column('cancion_id',db.ForeignKey('cancion.id'),primari_key=True))
 class Cancion(db.Model):
-    id=db.Column(db.Integer,primary_key=true)
+    id=db.Column(db.Integer,primary_key=True)
     titulo = db.Column(db.String(128))
     minutos = db.Column(db.Integer)
     segundos = db.Column(db.Integer)
@@ -25,21 +25,21 @@ class Medio(enum.Enum):
     def __repr__(self):
         return "{}-{}-{}-{}".format(self.Disco, self.Casete, self.CD)
 class Album(db.Model):
-    id=db.Column(db.Integer,primary_key=true)
+    id=db.Column(db.Integer,primary_key=True)
     titulo = db.Column(db.String(128))
     año = db.Column(db.Integer)
     descripcion = db.Column(db.String(128))
     medio =db.Column(db.Enum(Medio))
     usuario =db.Column(db.Integer,db.ForeignKey("usuario.id"))
     canciones =db.relationship
-    __table_args__=(db.UniqueConstraint('usuario','titulo',name='titulo_unico_album'))
+    __table_args__ = (db.UniqueConstraint('usuario','titulo',name='titulo_unico_album'),)
     def __repr__(self):
         return "{}-{}-{}-{}".format(self.titulo, self.año, self.descripcion, self.medio)
 class Usuario(db.Model):
-    id=db.Column(db.Integer,primary_key=true)
+    id=db.Column(db.Integer,primary_key=True)
     Nombre_usuario = db.Column(db.String(128))
     contraseña = db.Column(db.String(128))
-    albumes= db.realationship('Album',cascada='all,delete,delete-orphan')
+    albumes= db.relationship('Album',cascada='all,delete,delete-orphan')
 
 
     def __repr__(self):

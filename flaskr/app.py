@@ -10,27 +10,19 @@ db.create_all()
 
 with app.app_context():
     c = Cancion(titulo='prueba',minutos=2,segundos=25,interprete='Jesus')
-    db.session.add(c)
-    db.session.commit()
-    print(Cancion.query.all())
-
-with app.app_context():
-    c = Medio(Disco='si',Casete='no',CD='si')
-    db.session.add(c)
-    db.session.commit()
-    print(Medio.query.all())
-
-with app.app_context():
-    c = Album(Titulo='Aguilas',Año=2025,Descripcion='Lorem ipsum Lorem ipsum',medio=Medio.Disco)
+    a = Album(Titulo='Aguilas', Año=2025, Descripcion='Lorem ipsum Lorem ipsum', medio=Medio.Disco)
+    u = Usuario(Nombre_usuario='alejandro', contraseña='2948734ure')
+    u.albumes.append(a)
+    a.canciones.append(c)
+    db.session.add(u)
     db.session.add(c)
     db.session.commit()
     print(Album.query.all())
-
-with app.app_context():
-    c = Usuario(Nombre_usuario='alejandro',contraseña='2948734ure')
-    db.session.add(c)
-    db.session.commit()
-    print(Usuario.query.all())
+    print(Album.query.all()[0].canciones)
+    print(Cancion.query.all())
+    db.session.delete(a)
+    print(Album.query.all())
+    print(Cancion.query.all())
 
 
 
